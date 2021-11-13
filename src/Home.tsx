@@ -13,8 +13,7 @@ const Home = () => {
       <div>
         <div>
           <LoadScript
-        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string}
-        >
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string}>
         <GoogleMap
           mapContainerStyle={{width: '100%', height: '100vh', position: 'absolute'}}
           center={center}
