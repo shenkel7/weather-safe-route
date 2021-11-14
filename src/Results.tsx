@@ -6,7 +6,6 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
     lng: -96.7501
   };
 
-
 const Home = () => {
     return (
       <div>
