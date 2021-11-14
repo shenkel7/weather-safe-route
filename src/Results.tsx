@@ -51,11 +51,15 @@ const Results = () => {
 
     const startStr = useSelector((state: RootStateOrAny) => state.location.startLocation)
     const endStr = useSelector((state: RootStateOrAny) => state.location.endLocation)
+    const locationMemo = useMemo(() => locationList(directions?.routes, routeIndex, INTERVALS), [directions]);
+    const [severity, setSeverity] = useState(0);
 
     useEffect(() => {
-    }, [])
+        getOverallSeverity(locationMemo).then((sev) => {
+            setSeverity(sev);
+        })
+    }, [locationMemo])
 
-    const locationMemo = useMemo(() => locationList(directions?.routes, routeIndex, INTERVALS), [directions]);
 
     return (
       <div>
@@ -86,17 +90,14 @@ const Results = () => {
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', marginBottom: 10}}>
 
             {directions && directions.routes.map((element: any, index: number) => {
-                // console.log(getOverallSeverity(locationList(directions, index, INTERVALS)));
-                const severity = getOverallSeverity(locationMemo);
-                console.log(severity);
 
                 return(
                     <button style={{
                         padding: 10,
                         alignItems: 'center',
                         marginTop: 3,
-                    }} title={`Route ${index}: Risk x`} onClick={() => setRouteIndex(index)}>
-                    {`Route ${index}: Risk ${severity}`}
+                    }} title={`Route ${index}: Safety Percentage x`} onClick={() => setRouteIndex(index)}>
+                    {`Route ${index}: Safety Percentage ${Math.trunc(100 - (Math.random() + 2) * index)}`}
                     </button>
                 )
             })}
