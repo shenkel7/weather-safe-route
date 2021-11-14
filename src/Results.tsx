@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef, useMemo} from 'react'
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
 import debounce from 'lodash/debounce';
 import { RootStateOrAny, useSelector } from 'react-redux';
+import { getOverallSeverity } from './Weather';
 
   const center = {
     lat: 32.9858,
@@ -11,7 +12,7 @@ import { RootStateOrAny, useSelector } from 'react-redux';
 //   const startStr = '32.9858,-96.7501'
 //   const endStr = '36.9858,-97.7501'
 
-type Coordinates = {
+export type Coordinates = {
     lat: number;
     long: number;
 }
@@ -20,7 +21,7 @@ type Coordinates = {
 const locationList = (locationArr: Array<any>, routeIndex: number, intervals: number) => {
     const output = [];
 
-    if(locationArr){
+    if(locationArr && locationArr.length > 0){
         const intervalLength = Math.floor(locationArr.length / intervals);
         const steps = locationArr[routeIndex].legs[0].steps;
         const endObj = {
@@ -30,14 +31,14 @@ const locationList = (locationArr: Array<any>, routeIndex: number, intervals: nu
         output.push(endObj);
         // console.log(locationArr);
         
-        // for(let i = 0; i < locationArr.length; i += intervalLength){
-        //     const steps = locationArr[routeIndex].legs[0].steps;
-        //     const tempObj = {
-        //         lat: steps[i].start_location.lat(),
-        //         long: steps[i].start_location.lng()
-        //     }
-        //     output.push(tempObj);
-        // }
+        for(let i = 0; i < locationArr.length; i += intervalLength){
+            const steps = locationArr[routeIndex].legs[0].steps;
+            const tempObj = {
+                lat: steps[i].start_location.lat(),
+                long: steps[i].start_location.lng()
+            }
+            output.push(tempObj);
+        }
     }
 
     return output;
@@ -53,9 +54,6 @@ const Results = () => {
 
     useEffect(() => {
     }, [])
-
-    console.log(startStr);
-    console.log(endStr);
 
     const locationMemo = useMemo(() => locationList(directions?.routes, routeIndex, INTERVALS), [directions]);
 
@@ -88,13 +86,17 @@ const Results = () => {
             <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', marginBottom: 10}}>
 
             {directions && directions.routes.map((element: any, index: number) => {
+                // console.log(getOverallSeverity(locationList(directions, index, INTERVALS)));
+                const severity = getOverallSeverity(locationMemo);
+                console.log(severity);
+
                 return(
                     <button style={{
                         padding: 10,
                         alignItems: 'center',
                         marginTop: 3,
                     }} title={`Route ${index}: Risk x`} onClick={() => setRouteIndex(index)}>
-                    {`Route ${index}: Risk x`}
+                    {`Route ${index}: Risk ${severity}`}
                     </button>
                 )
             })}

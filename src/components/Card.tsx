@@ -3,8 +3,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { setStartLocation } from "../app/locationSlice";
-import { setEndLocation } from "../app/locationSlice";
+import { setEndLocation, setStartLocation,setEndLat, setEndLng, setStartLat, setStartLng } from "../app/locationSlice";
 import { useDispatch } from "react-redux";
 import { ChangeEvent } from "react";
 import usePlacesAutocomplete from "use-places-autocomplete";
@@ -70,8 +69,9 @@ export default function MediaCard() {
     Geocode.fromAddress(startLocation).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
         dispatch(setStartLocation(`${lat},${lng}`));
+        dispatch(setStartLat(lat));
+        dispatch(setStartLng(lng));
       },
       (error) => {
         console.error(error);
@@ -83,8 +83,9 @@ export default function MediaCard() {
     Geocode.fromAddress(endLocation).then(
       (response) => {
         const { lat, lng } = response.results[0].geometry.location;
-        console.log(lat, lng);
         dispatch(setEndLocation(`${lat},${lng}`));
+        dispatch(setEndLat(lat));
+        dispatch(setEndLng(lng));
       },
       (error) => {
         console.error(error);
