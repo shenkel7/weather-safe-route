@@ -6,7 +6,7 @@ import { GoogleMap, LoadScript } from '@react-google-maps/api';
     lng: -96.7501
   };
 
-const Home = () => {
+const Results = () => {
     return (
       <div>
         <div>
@@ -25,4 +25,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Results;
