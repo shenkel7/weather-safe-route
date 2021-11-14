@@ -30,14 +30,14 @@ const locationList = (locationArr: Array<any>, routeIndex: number, intervals: nu
         output.push(endObj);
         // console.log(locationArr);
         
-        for(let i = 0; i < locationArr.length; i += intervalLength){
-            const steps = locationArr[routeIndex].legs[0].steps;
-            const tempObj = {
-                lat: steps[i].start_location.lat(),
-                long: steps[i].start_location.lng()
-            }
-            output.push(tempObj);
-        }
+        // for(let i = 0; i < locationArr.length; i += intervalLength){
+        //     const steps = locationArr[routeIndex].legs[0].steps;
+        //     const tempObj = {
+        //         lat: steps[i].start_location.lat(),
+        //         long: steps[i].start_location.lng()
+        //     }
+        //     output.push(tempObj);
+        // }
     }
 
     return output;
@@ -49,10 +49,13 @@ const Results = () => {
     const INTERVALS = 2;
 
     const startStr = useSelector((state: RootStateOrAny) => state.location.startLocation)
-    const endStr = useSelector((state: RootStateOrAny) => state.location.startLocation)
+    const endStr = useSelector((state: RootStateOrAny) => state.location.endLocation)
 
     useEffect(() => {
     }, [])
+
+    console.log(startStr);
+    console.log(endStr);
 
     const locationMemo = useMemo(() => locationList(directions?.routes, routeIndex, INTERVALS), [directions]);
 
