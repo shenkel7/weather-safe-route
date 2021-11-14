@@ -101,6 +101,13 @@ const Results = () => {
                     </button>
                 )
             })}
+
+            {(directions === undefined || directions.length === 0) && 
+            <div style={{marginTop: 10}}>
+                Yikes! No results were found. Change your inputs and try again!
+            </div>
+                
+                }
             </div>
         </div>
         </div>
