@@ -1,16 +1,81 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Input from './Input'
-import Grid from '@mui/material/Grid';
-import Buttons from './Button'
+import { setStartLocation } from "../app/locationSlice";
+import { setEndLocation } from "../app/locationSlice";
+import { useDispatch } from "react-redux";
+import { ChangeEvent } from "react";
+import usePlacesAutocomplete from "use-places-autocomplete";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+import "./Input.css";
 
 export default function MediaCard() {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue
+  } = usePlacesAutocomplete();
+  
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>): void => {
+    setValue(e.target.value);
+  };
+
+  const handleSelectStart = (val: string): void => {
+    setValue(val, false);
+    setStartingLocation(val);
+  };
+
+  const handleSelectEnd = (val: string): void => {
+    setValue(val, false);
+    setEndingLocation(val);
+  };
+
+  const renderSuggestions = (): JSX.Element => {
+    const suggestions = data.map(({ place_id, description }: any) => (
+      <ComboboxOption key={place_id} value={description} />
+    ));
+    return (
+      <>
+        {suggestions}
+        <li className="logo">
+          <img
+            src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
+            alt="Powered by Google"
+          />
+        </li>
+      </>
+    );
+  };
+  const [startLocation, setStartingLocation] = useState("");
+  const [endLocation, setEndingLocation] = useState("");
+  const dispatch = useDispatch();
+
+  const changeStartLocation = (startLocation: any) => {
+    dispatch(setStartLocation(startLocation));
+  }
+
+  const changeEndLocation = (endLocation: any) => {
+    dispatch(setEndLocation(endLocation));
+  }
+
+  const handleClick = (e: any) => {
+    changeStartLocation(startLocation);
+    changeEndLocation(endLocation);
+    console.log("start location: " + startLocation);
+    console.log("end location: " + endLocation);
+  }
+
   return (
     <Card sx={{ maxWidth: 465, height: '484px', position: 'absolute', borderRadius: '10%', left: "50%",
     top: "45%",
@@ -25,13 +90,58 @@ export default function MediaCard() {
       </CardContent>
       
       <div style={{marginTop: '-2.5em'}}>
-        <Input text="Start location"/>
+      <div style={{margin: '0 auto'}}>
+
+{/* start input */}
+      <Combobox onSelect={handleSelectStart} aria-labelledby="demo">
+        <ComboboxInput
+          className="input-field"
+          placeholder="Start location"
+          value={startLocation}
+          onChange={(location: any)=>{
+            setStartingLocation(location.target.value);
+            handleInput(location);
+          }}
+          disabled={!ready}
+        />
+        <ComboboxPopover>
+          <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+
+    </div>
         <div style={{marginTop: '-1.5em'}}/>
-        <Input text="End location"/>
+        <div style={{margin: '0 auto'}}>
+
+{/* end input */}
+      <Combobox onSelect={handleSelectEnd} aria-labelledby="demo">
+        <ComboboxInput
+          className="input-field"
+          placeholder="End location"
+          value={endLocation}
+          onChange={(location: any)=>{
+            setEndingLocation(location.target.value);
+            handleInput(location);
+          }}
+          disabled={!ready}
+        />
+        <ComboboxPopover>
+          <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+
+    </div>
       </div>
       
       <CardActions>
-        {/* <Buttons /> */}
+      <button style={{
+        backgroundColor: '#0B1B55', 
+        color: 'white', 
+        width: '80px', 
+        height: '30px', 
+        transform: "translate(200%, 70%)"}}
+        onClick={handleClick}>GO</button>
+        
         
       </CardActions>
     </Card>
