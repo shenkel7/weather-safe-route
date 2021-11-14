@@ -20,6 +20,9 @@ import "./Input.css";
 import { Link } from "react-router-dom";
 import Geocode from "react-geocode";
 
+Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string);
+
+
 export default function MediaCard() {
   const {
     ready,
@@ -64,11 +67,29 @@ export default function MediaCard() {
   const dispatch = useDispatch();
 
   const changeStartLocation = (startLocation: any) => {
-    dispatch(setStartLocation(startLocation));
+    Geocode.fromAddress(startLocation).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        dispatch(setStartLocation(`${lat},${lng}`));
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   const changeEndLocation = (endLocation: any) => {
-    dispatch(setEndLocation(endLocation));
+    Geocode.fromAddress(endLocation).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        dispatch(setEndLocation(`${lat},${lng}`));
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   const handleClick = (e: any) => {
