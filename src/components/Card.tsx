@@ -18,6 +18,7 @@ import {
 import "@reach/combobox/styles.css";
 import "./Input.css";
 import { Link } from "react-router-dom";
+import Geocode from "react-geocode";
 
 export default function MediaCard() {
   const {
@@ -71,10 +72,29 @@ export default function MediaCard() {
   }
 
   const handleClick = (e: any) => {
-    changeStartLocation(startLocation);
-    changeEndLocation(endLocation);
-    console.log("start location: " + startLocation);
-    console.log("end location: " + endLocation);
+    Geocode.fromAddress(startLocation).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        changeStartLocation(startLocation);
+        console.log(lat, lng);
+        console.log("start location: " + startLocation);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    Geocode.fromAddress(endLocation).then(
+      (response) => {
+        const { lat, lng } = response.results[0].geometry.location;
+        console.log(lat, lng);
+        changeEndLocation(endLocation);
+        console.log("end location: " + endLocation);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   return (

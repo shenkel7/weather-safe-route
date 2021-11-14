@@ -1,25 +1,15 @@
 import React, {useEffect, useState, useRef, useMemo} from 'react'
 import { GoogleMap, LoadScript, DirectionsService, DirectionsRenderer } from '@react-google-maps/api';
-import {useThrottle, useThrottleCallback} from '@react-hook/throttle';
+import debounce from 'lodash/debounce';
+import { RootStateOrAny, useSelector } from 'react-redux';
 
   const center = {
     lat: 32.9858,
     lng: -96.7501
   };
 
-  const start = {
-    lat: 32.9858,
-    lng: -96.7501
-  }
-
-  const startStr = '32.9858,-96.7501'
-  const endStr = '36.9858,-97.7501'
-
-  const end = {
-    lat: 40,
-    lng: -90,
-  }
-
+//   const startStr = '32.9858,-96.7501'
+//   const endStr = '36.9858,-97.7501'
 
 type Coordinates = {
     lat: number;
@@ -54,9 +44,12 @@ const locationList = (locationArr: Array<any>, routeIndex: number, intervals: nu
 }
 
 const Results = () => {
-    const [directions, setDirections] = useThrottle<any>(undefined);
+    const [directions, setDirections] = useState<any>(undefined);
     const [routeIndex, setRouteIndex] = useState(0);
     const INTERVALS = 2;
+
+    const startStr = useSelector((state: RootStateOrAny) => state.location.startLocation)
+    const endStr = useSelector((state: RootStateOrAny) => state.location.startLocation)
 
     useEffect(() => {
     }, [])
@@ -77,22 +70,32 @@ const Results = () => {
                     if(status === "OK"){
                         setDirections(result);
                         console.log(locationMemo);
-
-                        // console.log(result?.routes[0].legs[0].steps[0].start_location.lat());
                     }
 
                 }}
             />
-            {directions && directions.routes.map((element: any, index: number) => 
-                <DirectionsRenderer options={{hideRouteList: false, routeIndex: index}} directions={directions}/>)
-            }) 
+            {directions && 
+                <DirectionsRenderer options={{hideRouteList: false, routeIndex: routeIndex}} directions={directions}/>
+            } 
                 
         </GoogleMap>
 
         <div style={{position: 'absolute', right: 0, backgroundColor: 'white', height: '100%', padding: 10, width: '20%', borderTopLeftRadius: 25, borderBottomLeftRadius: 25}}>
-            <p>
-                Hey
-            </p>
+            Routes
+            <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', marginBottom: 10}}>
+
+            {directions && directions.routes.map((element: any, index: number) => {
+                return(
+                    <button style={{
+                        padding: 10,
+                        alignItems: 'center',
+                        marginTop: 3,
+                    }} title={`Route ${index}: Risk x`} onClick={() => setRouteIndex(index)}>
+                    {`Route ${index}: Risk x`}
+                    </button>
+                )
+            })}
+            </div>
         </div>
         </div>
       </div>

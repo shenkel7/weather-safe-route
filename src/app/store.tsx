@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import matchReducer from './locationSlice'
+import locationSlice from './locationSlice'
 import authReducer from './authSlice'
 
-export default configureStore({
+const rootReducer = configureStore({
   reducer: {
-      match: matchReducer,
+      location: locationSlice,
       auth: authReducer
   },
 })
+
+export default rootReducer;
