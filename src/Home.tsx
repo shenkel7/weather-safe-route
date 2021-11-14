@@ -1,10 +1,11 @@
 import React from 'react'
 import { GoogleMap, LoadScript } from '@react-google-maps/api';
 import MediaCard from './components/Card'
-  
+
+
   const center = {
-    lat: -3.745,
-    lng: -38.523
+    lat: 32.9858,
+    lng: -96.7501
   };
 
 
@@ -12,7 +13,7 @@ const Home = () => {
     return (
       <div>
         <div>
-          <LoadScript
+          {/* <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string}
         >
         <GoogleMap
@@ -21,7 +22,7 @@ const Home = () => {
           zoom={10}>
           <></>
         </GoogleMap>
-      </LoadScript>
+      </LoadScript> */}
         </div>
         
       <MediaCard />
