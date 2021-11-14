@@ -66,7 +66,7 @@ const Results = () => {
         <div>
 
         <GoogleMap
-          mapContainerStyle={{width: '75%', height: '100vh', position: 'absolute'}}
+          mapContainerStyle={{width: '85%', height: '100vh', position: 'absolute'}}
           center={center}
           zoom={10}>
             <DirectionsService 
