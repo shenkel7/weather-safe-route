@@ -165,6 +165,8 @@ export default function MediaCard() {
             height: '30px', 
             alignSelf: 'center',
             marginLeft: 'auto',
+            borderRadius: '12px',
+            transform: 'translate(205%, 50%)'
           }}
             onClick={handleClick}>GO</button>
         </Link>

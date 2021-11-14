@@ -9,7 +9,7 @@ import MediaCard from './components/Card'
 
 const Home = () => {
     return (
-      <div>   
+      <div style={{backgroundImage: `url(./im/m.jpeg)`}}>   
       <MediaCard />
       </div>
     )
