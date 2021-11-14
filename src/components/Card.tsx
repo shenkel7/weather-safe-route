@@ -17,6 +17,7 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 import "./Input.css";
+import { Link } from "react-router-dom";
 
 export default function MediaCard() {
   const {
@@ -134,15 +135,21 @@ export default function MediaCard() {
       </div>
       
       <CardActions>
-      <button style={{
-        backgroundColor: '#0B1B55', 
-        color: 'white', 
-        width: '80px', 
-        height: '30px', 
-        transform: "translate(200%, 70%)"}}
-        onClick={handleClick}>GO</button>
+
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Link to="/results">
+          <button style={{
+            backgroundColor: '#0B1B55', 
+            color: 'white', 
+            width: '80px', 
+            height: '30px', 
+            alignSelf: 'center',
+            marginLeft: 'auto',
+          }}
+            onClick={handleClick}>GO</button>
+        </Link>
         
-        
+        </div>
       </CardActions>
     </Card>
   );
