@@ -5,29 +5,34 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import TextField from '@mui/material/TextField';
+import Input from './Input'
+import Grid from '@mui/material/Grid';
+import Buttons from './Button'
 
 export default function MediaCard() {
   return (
-    <Card sx={{ maxWidth: 345, position: 'absolute' }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt="green iguana"
-      />
+    <Card sx={{ maxWidth: 465, height: '484px', position: 'absolute', borderRadius: '10%', left: "50%",
+    top: "45%",
+    transform: "translate(-50%, -50%)" }}>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          Lizard
+        <Typography style={{ textAlign: "center", marginTop: "1em" }} gutterBottom variant="h2" component="div">
+          Safe Travel
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography variant="body1" color="text.secondary">
+        Enter your start and end location to get the safest route!
         </Typography>
       </CardContent>
+      
+      <div style={{marginTop: '-2.5em'}}>
+        <Input text="Start location"/>
+        <div style={{marginTop: '-1.5em'}}/>
+        <Input text="End location"/>
+      </div>
+      
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        {/* <Buttons /> */}
+        
       </CardActions>
     </Card>
   );
