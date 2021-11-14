@@ -20,6 +20,7 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.3.2",
     "dotenv": "^10.0.0",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-geocode": "^0.2.3",
@@ -56,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.176",
     "@types/react-geocode": "^0.2.0"
   }
 }
