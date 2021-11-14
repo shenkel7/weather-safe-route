@@ -178,17 +178,17 @@ export default function MediaCard() {
       
       <CardActions>
 
-        <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginLeft: '50%'}}>
         <Link to="/results">
           <button style={{
-            backgroundColor: '#0B1B55', 
-            color: 'white', 
-            width: '80px', 
-            height: '30px', 
-            alignSelf: 'center',
-            marginLeft: 'auto',
-            borderRadius: '12px',
-            transform: 'translate(205%, 50%)'
+            padding: 10,
+            alignItems: 'center',
+            marginTop: 10,
+            width: 80,
+            borderWidth: 0,
+            backgroundColor: '#b3926d',
+            borderRadius: 5,
+            transform: 'translate(-50%, 50%)'
           }}
             onClick={handleClick}>GO</button>
         </Link>
